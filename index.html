@@ -186,6 +186,31 @@
         font-size: 20px;
       }
     }
+      /* 手机上尽量占满整屏 */
+  @media (max-width: 768px) {
+    html, body {
+      height: 100%;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      align-items: stretch;
+      justify-content: stretch;
+    }
+    .container {
+      width: 100vw;
+      height: 100vh;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    canvas {
+      width: 100%;
+      height: auto;
+    }
+  }
   </style>
 </head>
 <body>
@@ -582,5 +607,6 @@
   </script>
 </body>
 </html>
+
 
 
