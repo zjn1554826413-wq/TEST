@@ -25,6 +25,8 @@
       box-shadow:
         0 18px 40px rgba(0, 0, 0, 0.75),
         0 0 0 1px rgba(255, 255, 255, 0.04);
+      max-width: 520px;
+      width: 100%;
     }
     .header {
       display: flex;
@@ -48,6 +50,7 @@
       gap: 12px;
       font-size: 13px;
       margin-bottom: 8px;
+      flex-wrap: wrap;
     }
     .scoreboard span {
       padding: 4px 10px;
@@ -65,6 +68,8 @@
       background: #111;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.08);
+      margin: 0 auto;
+      touch-action: none;
     }
 
     .hint {
@@ -74,6 +79,7 @@
       display: flex;
       justify-content: space-between;
       gap: 12px;
+      flex-wrap: wrap;
     }
 
     .badge {
@@ -83,6 +89,101 @@
       background: rgba(76, 175, 80, 0.08);
       border: 1px solid rgba(76, 175, 80, 0.4);
       color: #a5d6a7;
+      white-space: nowrap;
+    }
+
+    /* 方向按键区域 */
+    .controls-wrapper {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 60px 60px 60px;
+      grid-template-rows: 60px 60px 60px;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .ctrl-btn {
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: radial-gradient(circle at top, #444 0, #222 70%);
+      color: #f5f5f5;
+      font-size: 22px;
+      cursor: pointer;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
+      transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.1s ease;
+    }
+    .ctrl-btn:active {
+      transform: translateY(1px) scale(0.97);
+      box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
+      background: radial-gradient(circle at bottom, #555 0, #222 80%);
+    }
+
+    /* 方向键布局：中间是空的 */
+    .controls-grid .blank {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    /* 重新开始按钮 */
+    .restart-btn {
+      margin-top: 4px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(76, 175, 80, 0.6);
+      background: radial-gradient(circle at top, #4caf50 0, #1b5e20 70%);
+      color: #e8f5e9;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+      transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.1s ease;
+    }
+    .restart-btn:active {
+      transform: translateY(1px) scale(0.97);
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+      background: radial-gradient(circle at bottom, #66bb6a 0, #1b5e20 80%);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 16px;
+      }
+      .controls-grid {
+        grid-template-columns: 54px 54px 54px;
+        grid-template-rows: 54px 54px 54px;
+        gap: 5px;
+      }
+      .ctrl-btn {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
@@ -91,9 +192,9 @@
     <div class="header">
       <div>
         <div class="title">Snake</div>
-        <div class="subtitle">经典贪吃蛇 · 方向键控制</div>
+        <div class="subtitle">经典贪吃蛇 · 方向键或按键控制</div>
       </div>
-      <div class="badge">按空格重新开始</div>
+      <div class="badge">空格或按钮重新开始</div>
     </div>
 
     <div class="scoreboard">
@@ -104,8 +205,27 @@
 
     <canvas id="game" width="400" height="400"></canvas>
 
+    <!-- 新增：方向按键 + 重新开始按钮 -->
+    <div class="controls-wrapper">
+      <div class="controls-grid">
+        <button class="ctrl-btn blank"></button>
+        <button class="ctrl-btn" id="btnUp">▲</button>
+        <button class="ctrl-btn blank"></button>
+
+        <button class="ctrl-btn" id="btnLeft">◀</button>
+        <button class="ctrl-btn blank"></button>
+        <button class="ctrl-btn" id="btnRight">▶</button>
+
+        <button class="ctrl-btn blank"></button>
+        <button class="ctrl-btn" id="btnDown">▼</button>
+        <button class="ctrl-btn blank"></button>
+      </div>
+
+      <button class="restart-btn" id="btnRestart">重新开始</button>
+    </div>
+
     <div class="hint">
-      <span>↑ ↓ ← → 控制方向</span>
+      <span>键盘 ↑ ↓ ← → 或下方箭头按钮控制方向</span>
       <span>吃到食物加分，碰到墙或自己会失败</span>
     </div>
   </div>
@@ -115,8 +235,8 @@
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
 
-    const tileCount = 20;          // 格子数量（20x20）
-    const tileSize = canvas.width / tileCount; // 每个格子的大小
+    const tileCount = 20;
+    const tileSize = canvas.width / tileCount;
 
     let snake = [];
     let direction = { x: 1, y: 0 };   // 初始向右
@@ -130,6 +250,12 @@
     const highScoreEl = document.getElementById("highScore");
     const speedEl = document.getElementById("speed");
 
+    const btnUp = document.getElementById("btnUp");
+    const btnDown = document.getElementById("btnDown");
+    const btnLeft = document.getElementById("btnLeft");
+    const btnRight = document.getElementById("btnRight");
+    const btnRestart = document.getElementById("btnRestart");
+
     // 难度影响速度：简单/中等/困难
     const speedLevels = {
       easy: 180,
@@ -139,6 +265,12 @@
     let currentSpeed = "medium";
 
     highScoreEl.textContent = highScore;
+
+    function updateSpeedText() {
+      speedEl.textContent =
+        currentSpeed === "easy" ? "简单" :
+        currentSpeed === "hard" ? "困难" : "中等";
+    }
 
     function resetGame() {
       snake = [
@@ -150,15 +282,14 @@
       score = 0;
       gameOver = false;
       scoreEl.textContent = "0";
+      updateSpeedText();
       spawnFood();
-      speedEl.textContent =
-        currentSpeed === "easy" ? "简单" :
-        currentSpeed === "hard" ? "困难" : "中等";
 
       if (gameLoopId) {
         clearInterval(gameLoopId);
       }
       gameLoopId = setInterval(gameLoop, speedLevels[currentSpeed]);
+      draw();
     }
 
     function spawnFood() {
@@ -176,13 +307,11 @@
 
     function gameLoop() {
       if (gameOver) return;
-
       update();
       draw();
     }
 
     function update() {
-      // 新蛇头位置
       const head = {
         x: snake[0].x + direction.x,
         y: snake[0].y + direction.y,
@@ -205,7 +334,6 @@
         return;
       }
 
-      // 头插入到数组最前面
       snake.unshift(head);
 
       // 吃到食物
@@ -220,13 +348,11 @@
         spawnFood();
         maybeIncreaseSpeed();
       } else {
-        // 没吃到就移除尾巴
         snake.pop();
       }
     }
 
     function maybeIncreaseSpeed() {
-      // 简单逻辑：分数越高，速度从简单 -> 中等 -> 困难
       if (score >= 80 && currentSpeed !== "hard") {
         currentSpeed = "hard";
         resetInterval();
@@ -240,9 +366,7 @@
     }
 
     function resetInterval() {
-      speedEl.textContent =
-        currentSpeed === "easy" ? "简单" :
-        currentSpeed === "hard" ? "困难" : "中等";
+      updateSpeedText();
       clearInterval(gameLoopId);
       gameLoopId = setInterval(gameLoop, speedLevels[currentSpeed]);
     }
@@ -251,7 +375,6 @@
       ctx.fillStyle = "#101010";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // 画棋盘格子
       for (let x = 0; x < tileCount; x++) {
         for (let y = 0; y < tileCount; y++) {
           const isDark = (x + y) % 2 === 0;
@@ -293,7 +416,6 @@
           tileSize - 2
         );
 
-        // 蛇头画个简单的“眼睛”
         if (isHead) {
           ctx.fillStyle = "#111";
           const eyeSize = tileSize * 0.12;
@@ -326,41 +448,61 @@
       }
     }
 
-    function drawFood() {
-      const gradient = ctx.createRadialGradient(
-        food.x * tileSize + tileSize * 0.25,
-        food.y * tileSize + tileSize * 0.25,
-        2,
-        food.x * tileSize + tileSize / 2,
-        food.y * tileSize + tileSize / 2,
-        tileSize
-      );
-      gradient.addColorStop(0, "#fff3e0");
-      gradient.addColorStop(1, "#ff7043");
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.arc(
-        food.x * tileSize + tileSize / 2,
-        food.y * tileSize + tileSize / 2,
-        tileSize * 0.35,
-        0,
-        Math.PI * 2
-      );
-      ctx.fill();
+   function drawFood() {
+  const centerX = food.x * tileSize + tileSize / 2;
+  const centerY = food.y * tileSize + tileSize / 2;
 
-      // 小高光
-      ctx.fillStyle = "rgba(255,255,255,0.8)";
-      ctx.beginPath();
-      ctx.arc(
-        food.x * tileSize + tileSize * 0.4,
-        food.y * tileSize + tileSize * 0.4,
-        tileSize * 0.12,
-        0,
-        Math.PI * 2
-      );
-      ctx.fill();
-    }
+  // 外层饼皮（浅棕色）
+  const crustGradient = ctx.createRadialGradient(
+    centerX - tileSize * 0.1,
+    centerY - tileSize * 0.1,
+    2,
+    centerX,
+    centerY,
+    tileSize * 0.45
+  );
+  crustGradient.addColorStop(0, "#f6d4a4"); // 亮一点
+  crustGradient.addColorStop(1, "#c68b3a"); // 深一点
+  ctx.fillStyle = crustGradient;
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, tileSize * 0.45, 0, Math.PI * 2);
+  ctx.fill();
 
+  // 内层蛋挞心（蛋黄）
+  const custardGradient = ctx.createRadialGradient(
+    centerX - tileSize * 0.05,
+    centerY - tileSize * 0.05,
+    2,
+    centerX,
+    centerY,
+    tileSize * 0.3
+  );
+  custardGradient.addColorStop(0, "#fff9c4");
+  custardGradient.addColorStop(1, "#ffeb3b");
+  ctx.fillStyle = custardGradient;
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, tileSize * 0.3, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 表面稍微烤焦的斑点
+  ctx.fillStyle = "rgba(198,120,36,0.9)";
+  ctx.beginPath();
+  ctx.arc(centerX - tileSize * 0.08, centerY - tileSize * 0.05, tileSize * 0.06, 0, Math.PI * 2);
+  ctx.arc(centerX + tileSize * 0.06, centerY + tileSize * 0.02, tileSize * 0.05, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 右上高光
+  ctx.fillStyle = "rgba(255,255,255,0.7)";
+  ctx.beginPath();
+  ctx.arc(
+    centerX + tileSize * 0.12,
+    centerY - tileSize * 0.12,
+    tileSize * 0.07,
+    0,
+    Math.PI * 2
+  );
+  ctx.fill();
+}
     function drawGameOver() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.65)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -372,7 +514,7 @@
 
       ctx.fillStyle = "#f5f5f5";
       ctx.font = "16px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI'";
-      ctx.fillText("按空格重新开始", canvas.width / 2, canvas.height / 2 + 22);
+      ctx.fillText("按空格或点击“重新开始”", canvas.width / 2, canvas.height / 2 + 22);
     }
 
     function draw() {
@@ -390,28 +532,52 @@
       draw();
     }
 
+    // 统一的改方向函数：避免直接反向
+    function setDirection(newDir) {
+      if (gameOver) return;
+      // 避免 180 度掉头
+      if (newDir.x === -direction.x && newDir.y === -direction.y) return;
+      direction = newDir;
+    }
+
     // 键盘控制
     window.addEventListener("keydown", e => {
       const key = e.key;
-      if (key === "ArrowUp" && direction.y !== 1) {
-        direction = { x: 0, y: -1 };
-      } else if (key === "ArrowDown" && direction.y !== -1) {
-        direction = { x: 0, y: 1 };
-      } else if (key === "ArrowLeft" && direction.x !== 1) {
-        direction = { x: -1, y: 0 };
-      } else if (key === "ArrowRight" && direction.x !== -1) {
-        direction = { x: 1, y: 0 };
+      if (key === "ArrowUp") {
+        setDirection({ x: 0, y: -1 });
+      } else if (key === "ArrowDown") {
+        setDirection({ x: 0, y: 1 });
+      } else if (key === "ArrowLeft") {
+        setDirection({ x: -1, y: 0 });
+      } else if (key === "ArrowRight") {
+        setDirection({ x: 1, y: 0 });
       } else if (key === " " || key === "Spacebar") {
-        // 空格重开
-        if (gameOver) {
-          resetGame();
-        }
+        resetGame();
       }
     });
 
+    // 按钮控制（鼠标 + 手机点按）
+    function addButtonControl(btn, dir) {
+      if (!btn) return;
+      btn.addEventListener("click", () => {
+        setDirection(dir);
+      });
+    }
+
+    addButtonControl(btnUp,    { x: 0,  y: -1 });
+    addButtonControl(btnDown,  { x: 0,  y: 1 });
+    addButtonControl(btnLeft,  { x: -1, y: 0 });
+    addButtonControl(btnRight, { x: 1,  y: 0 });
+
+    if (btnRestart) {
+      btnRestart.addEventListener("click", () => {
+        resetGame();
+      });
+    }
+
     // 初始化
+    updateSpeedText();
     resetGame();
-    draw();
   </script>
 </body>
 </html>
