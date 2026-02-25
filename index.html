@@ -20,7 +20,7 @@
   color: #f5f5f5;
 }
     .container {
-      background: rgba(20, 20, 20, 0.7);
+      background: rgba(250, 128, 114, 0.7);
       padding: 20px 24px 18px;
       border-radius: 16px;
       box-shadow:
@@ -87,9 +87,9 @@
       font-size: 11px;
       padding: 2px 8px;
       border-radius: 999px;
-      background: rgba(76, 175, 80, 0.08);
-      border: 1px solid rgba(76, 175, 80, 0.4);
-      color: #a5d6a7;
+      background: rgba(250, 128, 114, 0.08);
+      border: 1px solid rgba(250, 128, 114, 0.4);
+      color: #CD5C5C;
       white-space: nowrap;
     }
 
@@ -113,9 +113,9 @@
 
     .ctrl-btn {
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.12);
       background: radial-gradient(circle at top, #444 0, #222 70%);
-      color: #f5f5f5;
+      color: #FFFFFF;
       font-size: 22px;
       cursor: pointer;
       outline: none;
@@ -151,8 +151,8 @@
       margin-top: 4px;
       padding: 8px 18px;
       border-radius: 999px;
-      border: 1px solid rgba(76, 175, 80, 0.6);
-      background: radial-gradient(circle at top, #4caf50 0, #1b5e20 70%);
+      border: 1px solid rgba(255, 228, 225, 0.6);
+      background: radial-gradient(circle at top, #FFE4E1 0, #FFFFFF 70%);
       color: #e8f5e9;
       font-size: 14px;
       cursor: pointer;
@@ -398,13 +398,13 @@
     }
 
     function drawGrid() {
-      ctx.fillStyle = "#101010";
+      ctx.fillStyle = "#FFE4E1";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       for (let x = 0; x < tileCount; x++) {
         for (let y = 0; y < tileCount; y++) {
           const isDark = (x + y) % 2 === 0;
-          ctx.fillStyle = isDark ? "#151515" : "#111111";
+          ctx.fillStyle = isDark ? "#FFB6C1" : "#FFE4E1";
           ctx.fillRect(
             x * tileSize,
             y * tileSize,
@@ -607,6 +607,7 @@
   </script>
 </body>
 </html>
+
 
 
 
