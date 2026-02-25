@@ -186,29 +186,37 @@
         font-size: 20px;
       }
     }
-      /* 手机上尽量占满整屏 */
+  /* 手机上让游戏界面铺满整个屏幕 */
   @media (max-width: 768px) {
     html, body {
       height: 100%;
-    }
-    body {
       margin: 0;
       padding: 0;
-      align-items: stretch;
+      overflow: hidden;
+    }
+    body {
+      align-items: stretch;   /* 不再只中间一块 */
       justify-content: stretch;
     }
     .container {
       width: 100vw;
-      height: 100vh;
+      height: 100vh;          /* 直接占满视口高度 */
       max-width: none;
       max-height: none;
       border-radius: 0;
       padding: 8px;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column; /* 上面画布，下面按键 */
+      justify-content: space-between;
     }
     canvas {
       width: 100%;
+      flex: 1;                /* 画布尽量占大部分空间 */
       height: auto;
+    }
+    .controls-wrapper {
+      margin-top: 8px;
     }
   }
   </style>
@@ -607,6 +615,7 @@
   </script>
 </body>
 </html>
+
 
 
 
