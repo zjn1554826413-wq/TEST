@@ -84,14 +84,14 @@
     }
 
     .badge {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(250, 128, 114, 0.08);
-      border: 1px solid rgba(250, 128, 114, 0.4);
-      color: #CD5C5C;
-      white-space: nowrap;
-    }
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 182, 193, 0.12);              /* 淡粉背景 */
+  border: 1px solid rgba(255, 128, 171, 0.7);         /* 粉色边框 */
+  color: #ffc1e3;                                     /* 粉色文字 */
+  white-space: nowrap;
+}
 
     /* 方向按键区域 */
     .controls-wrapper {
@@ -148,31 +148,31 @@
 
     /* 重新开始按钮 */
     .restart-btn {
-      margin-top: 4px;
-      padding: 8px 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 228, 225, 0.6);
-      background: radial-gradient(circle at top, #FFE4E1 0, #FFFFFF 70%);
-      color: 	#FFFFFF;
-      font-size: 14px;
-      cursor: pointer;
-      outline: none;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      box-shadow:
-        0 4px 10px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(255, 255, 255, 0.06);
-      transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.1s ease;
-    }
-    .restart-btn:active {
-      transform: translateY(1px) scale(0.97);
-      box-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(255, 255, 255, 0.06);
-      background: radial-gradient(circle at bottom, #66bb6a 0, #1b5e20 80%);
-    }
-
+  margin-top: 4px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 128, 171, 0.8); /* 粉色边框 */
+  background: radial-gradient(circle at top, #ffb8d8 0, #ff5c93 70%); /* 粉色渐变 */
+  color: #fff0f6; /* 按钮文字偏浅粉白 */
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  box-shadow:
+    0 4px 10px rgba(255, 92, 147, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.1s ease;
+}
+.restart-btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow:
+    0 2px 4px rgba(255, 92, 147, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  background: radial-gradient(circle at bottom, #ff9ac4 0, #e04880 80%);
+}
+    
     @media (max-width: 600px) {
       .container {
         padding: 16px;
@@ -607,6 +607,7 @@
   </script>
 </body>
 </html>
+
 
 
 
